@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """Проверка доступности Forgejo-сервера через API (только stdlib).
 
-Переменные окружения:
-  FORGEJO_URL    базовый URL, напр. https://codeberg.org (обязательно)
-  FORGEJO_TOKEN  персональный токен (необязательно; нужен для /user и /user/repos)
-
-Запуск:  python3 forgejo_check.py [--url URL] [--token TOKEN]
+Впишите URL и токен в константы ниже и запустите:  python forgejo_check.py
+(флаги --url/--token и переменные окружения FORGEJO_URL/FORGEJO_TOKEN
+ переопределяют константы).
 Код возврата: 0 — все проверки пройдены, 1 — есть ошибки.
 """
 import argparse
@@ -14,6 +12,11 @@ import os
 import sys
 import urllib.error
 import urllib.request
+
+# ====== НАСТРОЙКИ: впишите свои значения ======
+FORGEJO_URL = "https://projects-ssmp.emias.ru"
+FORGEJO_TOKEN = ""  # персональный токен; пусто — проверится только версия сервера
+# ===============================================
 
 
 class Forgejo:
@@ -55,8 +58,8 @@ def run_check(name, fn):
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument("--url", default=os.environ.get("FORGEJO_URL"))
-    p.add_argument("--token", default=os.environ.get("FORGEJO_TOKEN"))
+    p.add_argument("--url", default=os.environ.get("FORGEJO_URL") or FORGEJO_URL)
+    p.add_argument("--token", default=os.environ.get("FORGEJO_TOKEN") or FORGEJO_TOKEN)
     args = p.parse_args(argv)
     if not args.url:
         p.error("укажите --url или переменную FORGEJO_URL")

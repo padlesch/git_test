@@ -14,7 +14,7 @@ import urllib.error
 import urllib.request
 
 # ====== НАСТРОЙКИ: впишите свои значения ======
-FORGEJO_URL = "https://projects-ssmp.emias.ru"
+FORGEJO_URL = ""  # адрес вашего Forgejo, например https://forgejo.example.com
 FORGEJO_TOKEN = ""  # персональный токен; пусто — проверится только версия сервера
 # ===============================================
 
